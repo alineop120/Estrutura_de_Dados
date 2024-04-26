@@ -1,67 +1,90 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 // Estrutura para representar um ponto
 typedef struct {
-    double x;
-    double y;
+    double x; // Coordenada x do ponto
+    double y; // Coordenada y do ponto
 } Ponto;
 
-// Função para calcular a área do polígono
-double areaPoligono(Ponto vertices[], int n) {
-    double area = 0.0;
-    int i, j;
+// Função para calcular a área do triângulo formado pelos pontos A, B e C
+float AreaTriangulo(Ponto A, Ponto B, Ponto C) {
+    return fabs((A.x*(B.y - C.y) + B.x*(C.y - A.y) + C.x*(A.y - B.y)) / 2.0);
+}
 
-    // Fórmula da área de um polígono (utilizando coordenadas cartesianas)
-    for (i = 0; i < n; i++) {
-        j = (i + 1) % n;
-        area += vertices[i].x * vertices[j].y;
-        area -= vertices[j].x * vertices[i].y;
+// Função para calcular a área do polígono
+double AreaPoligono(Ponto vertices[], int n) {
+    double area = 0.0;
+
+    // Verifica se o polígono tem menos de 3 lados
+    if (n < 3) {
+        printf("Poligono deve ter pelo menos 3 lados.\n");
+        return 0.0;
     }
 
-    area = abs(area) / 2.0; // Valor absoluto da área e divisão por 2
+    // Calcula a área do polígono
+    Ponto pontoFixo = vertices[0]; // Fixamos o primeiro ponto
+    for (int i = 1; i < n - 1; i++) {
+        area += AreaTriangulo(pontoFixo, vertices[i], vertices[i+1]);
+    }
 
     return area;
 }
 
-int main() {
+// Função para ler os vértices do polígono de um arquivo
+Ponto* LerVerticesArquivo(const char* nomeArquivo, int* numVertices) {
     FILE *arquivo;
-    int numVertices, i;
-    double area;
+    int i;
+    Ponto *vertices;
 
     // Abre o arquivo para leitura
-    arquivo = fopen("trianguloABC.txt", "r");
+    arquivo = fopen(nomeArquivo, "r");
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
-        return 1;
+        printf("Erro ao abrir o arquivo '%s'. Verifique se o arquivo existe.\n", nomeArquivo);
+        return NULL;
     }
 
     // Lê o número de vértices do polígono do arquivo
-    fscanf(arquivo, "%d", &numVertices);
+    fscanf(arquivo, "%d", numVertices);
 
-    // Verifica se o número de vértices é 3 (um triângulo)
-    if (numVertices != 3) {
-        printf("O poligono nao e um triangulo.\n");
+    // Verifica se há pelo menos 3 vértices
+    if (*numVertices < 3) {
+        printf("Poligono deve ter pelo menos 3 lados.\n");
         fclose(arquivo);
-        return 1;
+        return NULL;
     }
 
     // Aloca memória para armazenar os vértices
-    Ponto *vertices = (Ponto *)malloc(numVertices * sizeof(Ponto));
+    vertices = (Ponto *)malloc(*numVertices * sizeof(Ponto));
 
     // Lê as coordenadas dos vértices do arquivo
-    for (i = 0; i < numVertices; i++) {
+    for (i = 0; i < *numVertices; i++) {
         fscanf(arquivo, "%lf %lf", &vertices[i].x, &vertices[i].y);
     }
 
     fclose(arquivo); // Fecha o arquivo
 
+    return vertices;
+}
+
+int main() {
+    int numVertices;
+    double area;
+
+    // Ler os vértices do polígono de um arquivo
+    Ponto *vertices = LerVerticesArquivo("poligono.txt", &numVertices);
+    if (vertices == NULL) {
+        return 1; // Encerra o programa em caso de erro na leitura do arquivo
+    }
+
     // Calcula a área do polígono
-    area = areaPoligono(vertices, numVertices);
+    area = AreaPoligono(vertices, numVertices);
 
-    printf("A area do poligono e %.2lf\n", area);
+    // Imprime a área do polígono
+    printf("A area do poligono e %.0lf\n", area);
 
-    // Libera a memória alocada
+    // Libera a memória alocada para os vértices
     free(vertices);
 
     return 0;
