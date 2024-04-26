@@ -13,8 +13,7 @@ double areaPoligono(Ponto vertices[], int n) {
     int i, j;
 
     // Fórmula da área de um polígono (utilizando coordenadas cartesianas)
-    for (i = 0; i < n; i++) 
-    {
+    for (i = 0; i < n; i++) {
         j = (i + 1) % n;
         area += vertices[i].x * vertices[j].y;
         area -= vertices[j].x * vertices[i].y;
@@ -32,8 +31,7 @@ int main() {
 
     // Abre o arquivo para leitura
     arquivo = fopen("trianguloABC.txt", "r");
-    if (arquivo == NULL) 
-    {
+    if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.\n");
         return 1;
     }
@@ -41,12 +39,18 @@ int main() {
     // Lê o número de vértices do polígono do arquivo
     fscanf(arquivo, "%d", &numVertices);
 
+    // Verifica se o número de vértices é 3 (um triângulo)
+    if (numVertices != 3) {
+        printf("O poligono nao e um triangulo.\n");
+        fclose(arquivo);
+        return 1;
+    }
+
     // Aloca memória para armazenar os vértices
     Ponto *vertices = (Ponto *)malloc(numVertices * sizeof(Ponto));
 
     // Lê as coordenadas dos vértices do arquivo
-    for (i = 0; i < numVertices; i++) 
-    {
+    for (i = 0; i < numVertices; i++) {
         fscanf(arquivo, "%lf %lf", &vertices[i].x, &vertices[i].y);
     }
 
@@ -62,6 +66,3 @@ int main() {
 
     return 0;
 }
-
-
-
