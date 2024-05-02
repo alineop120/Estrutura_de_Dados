@@ -1,27 +1,31 @@
-# include <stdio.h>
+#include <stdio.h>
 
-// Função para calcular média dos 3 valores no parâmetros
-float calcularMedia_3Valores (float val01, float val02, float val03) {
-    float soma_3Valores, media_3Valores;
+// Função para calcular média dos 3 valores no parâmetro
+double calcularMedia_3Valores(double val01, double val02, double val03) {
+    double soma_3Valores;
+    double media_3Valores;
     soma_3Valores = val01 + val02 + val03;
     media_3Valores = soma_3Valores / 3;
+    return media_3Valores; // Retornar a média calculada
 }
 
-int main(){
+int main() {
     // Variáveis
-    float num1, num2, num3, media;
+    double num1, num2, num3, media;
 
     // Entrada de Dados
-    printf("Infoorme o primeiro número inteiro: ");
-    scanf("%lf", num1);
-    printf("Infoorme o segundo número inteiro: ");
-    scanf("%lf", num2);
-    printf("Infoorme o terceiro número inteiro: ");
-    scanf("%lf", num3);
+    printf("Informe o primeiro número inteiro: ");
+    scanf("%lf", &num1);
+    printf("Informe o segundo número inteiro: ");
+    scanf("%lf", &num2);
+    printf("Informe o terceiro número inteiro: ");
+    scanf("%lf", &num3);
 
-    //Implementando a função
+    // Implementando a função
     media = calcularMedia_3Valores(num1, num2, num3);
 
-    //Saida de Dados
-    printf("Media dos 3 valores e: %lf", media);
+    // Saída de Dados
+    printf("A média dos 3 valores é: %.2lf", media);
+    
+    return 0; // Retorno da função main
 }
