@@ -14,18 +14,18 @@ int main() {
     double num1, num2, num3, media;
 
     // Entrada de Dados
-    printf("Informe o primeiro número inteiro: ");
+    printf("Informe o primeiro numero inteiro: ");
     scanf("%lf", &num1);
-    printf("Informe o segundo número inteiro: ");
+    printf("Informe o segundo numero inteiro: ");
     scanf("%lf", &num2);
-    printf("Informe o terceiro número inteiro: ");
+    printf("Informe o terceiro numero inteiro: ");
     scanf("%lf", &num3);
 
     // Implementando a função
     media = calcularMedia_3Valores(num1, num2, num3);
 
     // Saída de Dados
-    printf("A média dos 3 valores é: %.2lf", media);
+    printf("A media dos 3 valores e: %.2lf", media);
     
     return 0; // Retorno da função main
 }
