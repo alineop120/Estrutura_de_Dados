@@ -1,5 +1,9 @@
 #include <stdio.h>
 
+/*
+    Implemente uma função para calcular a média de 3 valores passados como parâmetros.
+*/
+
 // Função para calcular média dos 3 valores no parâmetro
 double calcularMedia_3Valores(double val01, double val02, double val03) {
     double soma_3Valores;

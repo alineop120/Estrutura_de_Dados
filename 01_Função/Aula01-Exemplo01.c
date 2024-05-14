@@ -14,7 +14,7 @@ int main() {
     printf("digite o valor do lado do quadrado: ");
     scanf("%lf", &lado);
 
-    // Implantar a função
+    // Implementar a função
     area = calcularAreaQuadrado(lado);
 
     // Saída de Dados

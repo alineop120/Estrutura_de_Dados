@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
+    Implemente uma função para calcular o fatorial de um número inteiro passado por parâmetro.
+*/
+
 #define ERRO -1
 
 int Fatorial(int N);
