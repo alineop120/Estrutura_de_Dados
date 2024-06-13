@@ -1,0 +1,3 @@
+comandos para serem executados
+Novo terminal Ctrl+Shift+'
+[endereço do diretório] gcc -o 
